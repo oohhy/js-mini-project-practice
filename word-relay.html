@@ -8,10 +8,51 @@
   </head>
 
   <body>
-    <div><span id="word">1</span>첫번째 참가자</div>
+    <div><span id="order">1</span>번째 참가자</div>
     <div>제시어: <span id="word"></span></div>
     <input type="text" />
     <button>입력</button>
-    <script></script>
+
+    <script>
+      //몇 명이 참여할지 선택
+      const number = parseInt(prompt("몇 명이 참가하나요?"), 10);
+      const $button = document.querySelector("button");
+      const $input = document.querySelector("input");
+      const $word = document.querySelector("#word");
+      const $order = document.querySelector("#order");
+      let word;
+      let newWord;
+
+      //onClickButton(리스너) 함수 생성
+      const onClickButton = () => {
+        if (!word || word[word.length - 1] === newWord[0]) {
+          //제시어가 비어 있는가? or 제시어 첫 글자와 입력한 단어의 첫 글자가 일치하는가?
+          word = newWord; //입력한 단어가 제시어가 된다.- 데이터를 바꿈
+          $word.textContent = word; //화면에 제시어 바꿈
+          const order = Number($order.textContent);
+          if (order < number) {
+            //order에 저장하지 않는 이유: 화면에 나타나는 값은 order가 아닌 $order.textContent
+            $order.textContent = order + 1;
+          } else {
+            $order.textContent = 1;
+          }
+        } else {
+          // 첫 번째도 아니고 입력한 단어가 올바르지도 않음
+          alert("올바르지 않은 단어 입니다.");
+        }
+        // 모든 경우에 적용시켜줘야 하는 명령은 따로 빼기
+        $input.value = ""; //칸 비워주기 입력값은 .value로 불러옴
+        $input.focus(); //input창에 커서 놔주기
+      };
+
+      //onInput(리스너) 함수 생성
+      const onInput = (event) => {
+        newWord = event.target.value; //event를 받는 target인 input 태그가 입력받은 값을 가져와서 newWord에 할당
+      };
+
+      //이벤트 타겟.addEventListener('발생할 이벤트', 이벤트 발생 후 실행될 함수)
+      $button.addEventListener("click", onClickButton);
+      $input.addEventListener("input", onInput);
+    </script>
   </body>
 </html>
