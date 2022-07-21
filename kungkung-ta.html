@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kungkung-ta</title>
+  </head>
+  <body>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text" />
+    <button type="button">입력</button>
+
+    <script>
+      const number = Number(prompt("몇 명이 할겨?"));
+      if (number) {
+        //prompt에서 취소 누르면 number->NaN->false->아래 코드 실행X
+        const $order = document.querySelector("#order");
+        const $input = document.querySelector("input");
+        const $word = document.querySelector("#word");
+        const $button = document.querySelector("button");
+        let newWord;
+        let word;
+
+        //input event 발생시, 입력받은 value값을 저장
+        const onInput = function (event) {
+          newWord = event.target.value;
+        };
+
+        const onClickButton = function () {
+          //(비어있음 or 올바름) and 3글자?
+          if (
+            (!word || word[word.length - 1] == newWord[0]) &&
+            newWord.length === 3
+          ) {
+            word = newWord; //입력한 단어가 제시어가 된다
+            $word.textContent = word; //화면에 제시어 표시
+
+            const order = Number($order.textContent); //반복하며 바뀐 숫자가 다시 할당 돼야해서 if문 안에 넣음
+            if (order < number) {
+              $order.textContent = order + 1;
+            } else {
+              $order.textContent = 1;
+            }
+          } else {
+            alert("올바른 단어가 아닙니다. 다시 입력하세요.");
+          }
+          $input.value = "";
+          $input.focus();
+        };
+
+        $input.addEventListener("input", onInput);
+        $button.addEventListener("click", onClickButton);
+      }
+    </script>
+  </body>
+</html>
