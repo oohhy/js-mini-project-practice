@@ -65,15 +65,23 @@
     //event가 일어나면 다음 코드 실행
     const onClickNumber = (event) => {
       if (!operator) {
-        //비어있다
+        //비어있다-첫 입력인 경우
         numOne += event.target.textContent;
         $result.value += event.target.textContent; //화면에 표시되는 숫자 변경
+        return;
+      }
+      if (operator === "=") {
+        // '='  사용한적 있을때는 변수 초기화
+        operator = "";
+        numOne = event.target.textContent;
+        $result.value = event.target.textContent;
         return;
       }
       //비어있지 않다
       if (!numTwo) {
         $result.value = "";
       }
+
       numTwo += event.target.textContent; //event.target(="#num-$")의 문자를 저장
       $result.value += event.target.textContent;
     };
@@ -104,6 +112,7 @@
           case "/":
             $result.value = parseInt(numOne) / parseInt(numTwo);
             break;
+
           default:
             break;
         }
@@ -134,7 +143,6 @@
             break;
           case "-":
             $result.value = parseInt(numOne) - parseInt(numTwo);
-
             break;
           case "x":
             $result.value = parseInt(numOne) * parseInt(numTwo);
@@ -147,7 +155,7 @@
         }
         numOne = Number($result.value);
         numTwo = "";
-        operator = "";
+        operator = "="; //연이은 연산인지 확인하기 위해서 =기록
         $operator.value = "";
       } else {
         alert("숫자를 먼저 입력하세요");
