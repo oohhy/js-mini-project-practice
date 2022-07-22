@@ -60,54 +60,48 @@
     let numTwo = "";
     const $operator = document.querySelector("#operator");
     const $result = document.querySelector("#result");
-    // 1. 콜백함수(함수가 들어가는 자리!!)에 undefined(기본값 return undefined)가 들어가는것을 막기 위해 return값을 함수로 지정
-    // 2. 빈 함수는 실행될 게 없기 때문에 실제 동작 내용을 함수 안으로 넣어서 click했을때 함수가 실행되게 수정
-    // 3. 화살표 함수와 return이 붙으면 {return} 생략 가능
-    // -> 고차 함수 (high order function) : 함수 안에 함수 호출 () => () => {}
-    const onClickNumber = (number) => () => {
+
+    //event가 일어나면 다음 코드 실행
+    const onClickNumber = (event) => {
       if (operator) {
         //비어있지 않다
-        numTwo += number;
+        numTwo += event.target.textContent; //event.target(="#num-$")의 문자를 저장
       } else {
         //비어있다
-        numOne += number;
+        numOne += event.target.textContent;
+      }
+      //화면에 표시되는 숫자 변경}
+      $result.value += event.target.textContent;
+    };
+
+    document.querySelector("#num-0").addEventListener("click", onClickNumber);
+    document.querySelector("#num-1").addEventListener("click", onClickNumber);
+    document.querySelector("#num-2").addEventListener("click", onClickNumber);
+    document.querySelector("#num-3").addEventListener("click", onClickNumber);
+    document.querySelector("#num-4").addEventListener("click", onClickNumber);
+    document.querySelector("#num-5").addEventListener("click", onClickNumber);
+    document.querySelector("#num-6").addEventListener("click", onClickNumber);
+    document.querySelector("#num-7").addEventListener("click", onClickNumber);
+    document.querySelector("#num-8").addEventListener("click", onClickNumber);
+    document.querySelector("#num-9").addEventListener("click", onClickNumber);
+
+    const onClickOperator = (event) => {
+      if (numOne) {
+        operator = event.target.textContent;
+        $operator.value = event.target.textContent;
+      } else {
+        alert("숫자를 먼저 입력하세요");
       }
     };
-    $result.value += number; //화면에 표시되는 숫자 변경}
+
+    document.querySelector("#plus").addEventListener("click", onClickOperator);
+    document.querySelector("#minus").addEventListener("click", onClickOperator);
     document
-      .querySelector("#num-0")
-      .addEventListener("click", onClickNumber("0"));
+      .querySelector("#divide")
+      .addEventListener("click", onClickOperator);
     document
-      .querySelector("#num-1")
-      .addEventListener("click", onClickNumber("1"));
-    document
-      .querySelector("#num-2")
-      .addEventListener("click", onClickNumber("2"));
-    document
-      .querySelector("#num-3")
-      .addEventListener("click", onClickNumber("3"));
-    document
-      .querySelector("#num-4")
-      .addEventListener("click", onClickNumber("4"));
-    document
-      .querySelector("#num-5")
-      .addEventListener("click", onClickNumber("5"));
-    document
-      .querySelector("#num-6")
-      .addEventListener("click", onClickNumber("6"));
-    document
-      .querySelector("#num-7")
-      .addEventListener("click", onClickNumber("7"));
-    document
-      .querySelector("#num-8")
-      .addEventListener("click", onClickNumber("8"));
-    document
-      .querySelector("#num-9")
-      .addEventListener("click", onClickNumber("9"));
-    document.querySelector("#plus").addEventListener("click", () => {});
-    document.querySelector("#minus").addEventListener("click", () => {});
-    document.querySelector("#divide").addEventListener("click", () => {});
-    document.querySelector("#multiply").addEventListener("click", () => {});
+      .querySelector("#multiply")
+      .addEventListener("click", onClickOperator);
     document.querySelector("#calculate").addEventListener("click", () => {});
     document.querySelector("#clear").addEventListener("click", () => {});
   </script>
