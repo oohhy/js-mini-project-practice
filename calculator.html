@@ -63,17 +63,17 @@
 
     //event가 일어나면 다음 코드 실행
     const onClickNumber = (event) => {
-      if (operator) {
-        //비어있지 않다
-        if (!numTwo) {
-          $result.value = "";
-        }
-        numTwo += event.target.textContent; //event.target(="#num-$")의 문자를 저장
-      } else {
+      if (!operator) {
         //비어있다
         numOne += event.target.textContent;
+        $result.value += event.target.textContent; //화면에 표시되는 숫자 변경
+        return;
       }
-      //화면에 표시되는 숫자 변경}
+      //비어있지 않다
+      if (!numTwo) {
+        $result.value = "";
+      }
+      numTwo += event.target.textContent; //event.target(="#num-$")의 문자를 저장
       $result.value += event.target.textContent;
     };
 
@@ -105,7 +105,25 @@
     document
       .querySelector("#multiply")
       .addEventListener("click", onClickOperator);
-    document.querySelector("#calculate").addEventListener("click", () => {});
+    document.querySelector("#calculate").addEventListener("click", () => {
+      switch (operator) {
+        case "+":
+          $result.value = parseInt(numOne) + parseInt(numTwo);
+          break;
+        case "-":
+          $result.value = parseInt(numOne) - parseInt(numTwo);
+          break;
+        case "x":
+          $result.value = parseInt(numOne) * parseInt(numTwo);
+          break;
+        case "/":
+          $result.value = parseInt(numOne) / parseInt(numTwo);
+          break;
+        default:
+          break;
+      }
+    });
+
     document.querySelector("#clear").addEventListener("click", () => {});
   </script>
 </body>
