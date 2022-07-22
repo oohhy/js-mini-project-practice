@@ -60,7 +60,11 @@
     let numTwo = "";
     const $operator = document.querySelector("#operator");
     const $result = document.querySelector("#result");
-    const onClickNumber = (number) => {
+    // 1. 콜백함수(함수가 들어가는 자리!!)에 undefined(기본값 return undefined)가 들어가는것을 막기 위해 return값을 함수로 지정
+    // 2. 빈 함수는 실행될 게 없기 때문에 실제 동작 내용을 함수 안으로 넣어서 click했을때 함수가 실행되게 수정
+    // 3. 화살표 함수와 return이 붙으면 {return} 생략 가능
+    // -> 고차 함수 (high order function) : 함수 안에 함수 호출 () => () => {}
+    const onClickNumber = (number) => () => {
       if (operator) {
         //비어있지 않다
         numTwo += number;
@@ -68,8 +72,8 @@
         //비어있다
         numOne += number;
       }
-      $result.value += number; //화면에 표시되는 숫자 변경
     };
+    $result.value += number; //화면에 표시되는 숫자 변경}
     document
       .querySelector("#num-0")
       .addEventListener("click", onClickNumber("0"));
