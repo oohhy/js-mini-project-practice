@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>숫자야구</title>
+  </head>
+  <body>
+    <form id="form">
+      <input type="text" id="input" />
+      <button>확인</button>
+    </form>
+    <div id="logs"></div>
+    <script>
+      const $input = document.querySelector("#input");
+      const $form = document.querySelector("#form");
+      const $logs = document.querySelector("#logs");
+
+      //numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9] 만들기
+      const numbers = [];
+      for (let n = 0; n < 9; n += 1) {
+        numbers.push(n + 1);
+      }
+
+      //number에서
+      const answer = [];
+      for (let n = 0; n < 4; n += 1) {
+        //index 무작위로 하나 지정
+        const index = Math.floor(Math.random() * (numbers.length - n));
+        //numbers에서 무작위로 고른 index에 해당하는 요소를 answer에 추가
+        answer.push(numbers[index]);
+        //추가 후 numbers에서 index번째 요소에서 1개 제거(다음 뽑기에서 undefined뽑히는 상황 방지)
+        numbers.splice(index, 1);
+      }
+    </script>
+  </body>
+</html>
