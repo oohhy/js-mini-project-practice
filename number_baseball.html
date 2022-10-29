@@ -20,16 +20,61 @@
         numbers.push(n + 1);
       }
 
-      //number에서
       const answer = [];
       for (let n = 0; n < 4; n += 1) {
-        //index 무작위로 하나 지정
-        const index = Math.floor(Math.random() * (numbers.length - n));
-        //numbers에서 무작위로 고른 index에 해당하는 요소를 answer에 추가
+        // 뽑을 숫자의 index 정하기- 반복되면서 줄어드는 numbers의 길이 반영해서 하나의 index 고르기(다음 뽑기에서 undefined뽑히는 상황 방지)
+        const index = Math.floor(Math.random() * numbers.length);
+        //뽑은 요소를 answer에 추가
         answer.push(numbers[index]);
-        //추가 후 numbers에서 index번째 요소에서 1개 제거(다음 뽑기에서 undefined뽑히는 상황 방지)
+        //추가 후 numbers에서 index번째 요소에서 1개 제거(중복 금지)
         numbers.splice(index, 1);
       }
+
+      // 입력한 4자리 숫자 저장
+      const tries = [];
+      // 입력한 4자리 숫자 검사(3가지)
+      // 1. 중복된 숫자가 없는지
+      // 2. 4자리인지
+      // 3. 전에 입력한 값인지
+      function checkInput(input) {
+        if (input.length !== 4) {
+          return alert("4자리 숫자를 입력해 주세요");
+        }
+        // new Set : 중복이 없는 배열
+        // length가 아니라 size로 길이 검사
+        if (new Set(input).size !== 4) {
+          return alert("중복되지 않게 입력해 주세요");
+        }
+        if (tries.includes(input)) {
+          return alert("이미 시도한 값입니다.");
+        }
+        return true;
+      }
+
+      $form.addEventListener("submit", (event) => {
+        event.preventDefault(); // 기본 동작 막기(서브밋-새로고침)
+        const value = $input.value;
+        $input.value = "";
+        // 입력값 문제 있는 애들은 미리 return
+        if (!checkInput(value)) {
+          return;
+        }
+        // 입력값 문제 없음
+        if (checkInput(value)) {
+          tries.push(value);
+          if (answer.join("") === value) {
+            $logs.textContent = "홈런!!";
+            return;
+          }
+          if (tries.length >= 9) {
+            const message = document.createTextNode(
+              `패배! 정답은 ${answer.join("")}입니다!`
+            );
+            $logs.appendChild(message);
+            return;
+          }
+        }
+      });
     </script>
   </body>
 </html>
