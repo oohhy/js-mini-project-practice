@@ -23,19 +23,21 @@
   <script>
     const candidate = Array(45)
       .fill()
-      .map((v, i) => i + 1);
+      .map((v, i) => i + 1); //[1, 2, 3, 4, ... , 45]
+
     const shuffle = [];
+    // 배열 안 요소를 섞는 과정
     while (candidate.length > 0) {
-      const random = Math.floor(Math.random() * candidate.length); // 무작위 인덱스 뽑기
-      const spliceArray = candidate.splice(random, 1); // 뽑은 값은 배열에 들어 있음
+      // 요소가 남아있을 때 까지 반복
+      const random = Math.floor(Math.random() * candidate.length); //  0 ~ 44중 무작위 인덱스 뽑기
+      const spliceArray = candidate.splice(random, 1); // 뽑은 값이 들어있는 배열(요소는 늘 하나)
       const value = spliceArray[0]; // 배열에 들어 있는 값을 꺼내어
       shuffle.push(value); // shuffle 배열에 넣기
     }
-    console.log(shuffle);
-    const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b);
+    console.log(shuffle); // 1 ~ 45가 무작위로 섞인 배열
+    const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b); // 6개 뽑아서 오름차순 정렬
     const bonus = shuffle[6];
     console.log(winBalls, bonus);
-
     const $result = document.querySelector("#result");
     const drawBall = (number, $parent) => {
       const $ball = document.createElement("div");
